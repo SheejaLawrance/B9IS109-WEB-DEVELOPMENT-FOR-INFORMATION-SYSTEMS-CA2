@@ -8,7 +8,7 @@
         aspiring programmers.</p>
     <div class="d-inline-flex gap-2 mb-5">
         <a href="./quiz.html" class="btn btn-success">Take a Quiz</a>
-        <a href="./register.html" class="btn btn-primary">Sign Up</a>
+        <a href="{% url 'register' %}" class="btn btn-primary">Sign Up</a>
     </div>
 
     <div class="container text-center">
@@ -28,10 +28,10 @@
                 <p><a class="btn btn-secondary" href="./profile.html">View Profile »</a></p>
             </div>
             <div class="col-lg-4 position-relative mb-5">
-                <img src="../static/blank-profile-picture-973460_1280.png" width="140" height="140" alt="user"
+                <img src="{% static 'images/blank-profile-picture-973460_1280.png'%}" width="140" height="140" alt="user"
                     class="img-fluid bd-placeholder-img rounded-circle">
                 <span class="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-success">
-                    1
+                    2
                     <span class="visually-hidden">unread messages</span>
                 </span>
                 <h2 class="fw-normal">@Sheeja</h2>
@@ -41,10 +41,10 @@
                 <p><a class="btn btn-secondary" href="./profile.html">View Profile »</a></p>
             </div>
             <div class="col-lg-4 position-relative mb-5">
-                <img src="../static/blank-profile-picture-973460_1280.png" width="140" height="140" alt="user"
+                <img src="{% static 'images/blank-profile-picture-973460_1280.png'%}" width="140" height="140" alt="user"
                     class="img-fluid bd-placeholder-img rounded-circle">
                 <span class="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-success">
-                    1
+                    3
                     <span class="visually-hidden">unread messages</span>
                 </span>
                 <h2 class="fw-normal">@Sheeja</h2>
