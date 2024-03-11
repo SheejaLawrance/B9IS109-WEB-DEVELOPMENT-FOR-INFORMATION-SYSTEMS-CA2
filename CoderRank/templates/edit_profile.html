@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+{% block title %}Edit Profile - CoderRank{% endblock title %}
+{% block content %}
+<h1 class="display-4 text-center my-5">Edit Profile</h1>
+<div class="container">
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="fullName" class="form-label">Full Name</label>
+      <input type="text" class="form-control" id="fullName" name="full_name" value="{{ user_profile.full_name }}">
+    </div>
+    <div class="mb-3">
+      <label for="jobTitle" class="form-label">Job Title</label>
+      <input type="text" class="form-control" id="jobTitle" name="job_title" value="{{ user_profile.job_title }}">
+    </div>
+    <div class="mb-3">
+      <label for="location" class="form-label">Location</label>
+      <input type="text" class="form-control" id="location" name="location" value="{{ user_profile.location }}">
+    </div>
+    <div class="mb-3">
+      <label for="yearsExp" class="form-label">Years of Experience</label>
+      <input type="text" class="form-control" id="yearsExp" name="years_of_exp" value="{{ user_profile.years_of_exp }}">
+    </div>
+    <div class="mb-3">
+      <label for="education" class="form-label">Education</label>
+      <input type="text" class="form-control" id="education" name="education" value="{{ user_profile.education }}">
+    </div>
+    <div class="mb-3">
+      <label for="bio" class="form-label">Bio</label>
+      <textarea class="form-control" id="bio" name="bio">{{ user_profile.bio }}</textarea>
+    </div>
+    <div class="mb-3">
+      <label for="profileImg" class="form-label">Profile Image</label>
+      <input type="file" class="form-control" id="profileImg" name="profile_img">
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
+</div>
+{% endblock content %}

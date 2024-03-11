@@ -3,9 +3,16 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile 
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
+
+
 
 # Create your views here.
+
 def register(request):
+    
+    if request.user.is_authenticated:
+        return redirect('profile', request.user.username)
     
     if request.method=='POST':
         email=request.POST['email']
@@ -34,7 +41,7 @@ def register(request):
                 user_model=User.objects.get(username=username)
                 new_profile=Profile.objects.create(user=user_model,email_id=email)
                 new_profile.save()
-                return redirect('profile', username)
+                return redirect('profile',  username)
             
         else:
             messages.info(request,"Password not matching")
@@ -42,7 +49,9 @@ def register(request):
     context={}
     return render(request,'register.html',context)
 
+@login_required(login_url='login')
 def profile(request,username):
+    
     user_obj=User.objects.get(username=username)
     user_profile=Profile.objects.get(user=user_obj)
     
@@ -50,6 +59,9 @@ def profile(request,username):
     return render(request,"profile.html",context)
 
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect('profile', request.user.username)
+    
     if request.method=="POST":
         username=request.POST['username']
         password=request.POST['password']
@@ -67,6 +79,17 @@ def user_login(request):
     return render(request,"login.html")
 
 
+@login_required(login_url='login')
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+@login_required(login_url='login')
+def edit_profile(request):
+    context={}
+    return render(request,'edit_profile.html',context)
+
+@login_required(login_url='login')
+def delete_profile(request):
+    context={}
+    return render(request,'confirm_profile.html',context)
