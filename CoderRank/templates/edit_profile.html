@@ -3,35 +3,50 @@
 {% block content %}
 <h1 class="display-4 text-center my-5">Edit Profile</h1>
 <div class="container">
-  <form method="POST" enctype="multipart/form-data">
+  <form method="POST" enctype="multipart/form-data" action="">
     {% csrf_token %}
     <div class="mb-3">
-      <label for="fullName" class="form-label">Full Name</label>
-      <input type="text" class="form-control" id="fullName" name="full_name" value="{{ user_profile.full_name }}">
+      <img src="{{user_profile.profile_img.url}}" alt="profile" class="rounded-circle" width="150" height="150"  name="profile_img" class="form-control" id="profileImg" name="profile_img">
+    </div>
+    <div class="mb-3">
+      <label for="firstName" class="form-label">First Name</label>
+      <input type="text" name="firstname" class="form-control" id="firstName"  value="{{ user_profile.user.first_name }}" required >
+    </div>
+    <div class="mb-3">
+      <label for="lastName" class="form-label">Last Name</label>
+      <input type="text" name="lastname" class="form-control" id="lastName"  value="{{ user_profile.user.last_name }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" name="email" class="form-control" id="email"  value="{{ user_profile.user.email }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input type="username" name="username" class="form-control" id="username"  value="{{ user_profile.user.username }}" required>
     </div>
     <div class="mb-3">
       <label for="jobTitle" class="form-label">Job Title</label>
-      <input type="text" class="form-control" id="jobTitle" name="job_title" value="{{ user_profile.job_title }}">
+      <input type="text" name="jobtitle" class="form-control" id="jobTitle"  value="{{ user_profile.job_title }}" required>
     </div>
     <div class="mb-3">
       <label for="location" class="form-label">Location</label>
-      <input type="text" class="form-control" id="location" name="location" value="{{ user_profile.location }}">
+      <input type="text" name="location" class="form-control" id="location"  value="{{ user_profile.location }}" required>
     </div>
     <div class="mb-3">
       <label for="yearsExp" class="form-label">Years of Experience</label>
-      <input type="text" class="form-control" id="yearsExp" name="years_of_exp" value="{{ user_profile.years_of_exp }}">
+      <input type="text" name="experience" class="form-control" id="yearsExp"  value="{{ user_profile.years_of_exp }}" required>
     </div>
     <div class="mb-3">
       <label for="education" class="form-label">Education</label>
-      <input type="text" class="form-control" id="education" name="education" value="{{ user_profile.education }}">
+      <input type="text" name="education" class="form-control" id="education"  value="{{ user_profile.education }}" required>
     </div>
     <div class="mb-3">
       <label for="bio" class="form-label">Bio</label>
-      <textarea class="form-control" id="bio" name="bio">{{ user_profile.bio }}</textarea>
+      <textarea class="form-control" id="bio" name="bio" required>{{ user_profile.bio }}</textarea>
     </div>
     <div class="mb-3">
       <label for="profileImg" class="form-label">Profile Image</label>
-      <input type="file" class="form-control" id="profileImg" name="profile_img">
+      <input type="file" name="profile_img" class="form-control" id="profileImg" name="profile_img">
     </div>
     <button type="submit" class="btn btn-primary">Save Changes</button>
   </form>

@@ -5,5 +5,7 @@ from account.models import Profile
 
 def home(request):
     
+    
+    
     return render(request,"home.html")
    

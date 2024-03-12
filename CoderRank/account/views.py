@@ -86,7 +86,61 @@ def user_logout(request):
 
 @login_required(login_url='login')
 def edit_profile(request):
-    context={}
+    user_obj=User.objects.get(username=request.user)
+    user_profile=Profile.objects.get(user=user_obj)
+    
+    if request.method=="POST":
+        #img
+        if request.FILES.get('profile_img')!=None:
+            user_profile.profile_img=request.FILES.get('profile_img')
+            user_profile.save()
+        
+        #email    
+        if request.POST.get('email')!=None:
+            u=User.objects.filter(email=request.POST.get('email')).first()
+            
+            if u==None:
+                user_obj.email=request.POST.get('email')
+                user_obj.save()
+            else:
+                if u!=user_obj:
+                    messages.info(request,"This email id registered with another user, Try a different one!")
+                    return redirect('edit_profile')
+                
+            
+        #username
+        if request.POST.get('username')!=None:
+            u=User.objects.filter(email=request.POST.get('username')).first()
+            
+            if u==None:
+                user_obj.username=request.POST.get('username')
+                user_obj.save()
+            else:
+                if u!=user_obj:
+                    messages.info(request,"This username is registered with another user, Try a different one!")
+                    return redirect('edit_profile')
+                
+        #fname and lname
+        user_obj.first_name=request.POST.get('firstname')
+        user_obj.last_name=request.POST.get('lastname')
+        user_obj.save()
+        
+        #location
+        user_profile.location=request.POST.get('location')
+        #experience
+        user_profile.years_of_exp=request.POST.get('experience')
+        #education
+        user_profile.education=request.POST.get('education')
+        #bio
+        user_profile.bio=request.POST.get('bio')
+        #job
+        user_profile.job_title=request.POST.get('jobtitle')
+        
+        user_profile.save()
+        
+        return redirect('profile', user_obj.username)
+            
+    context={"user_profile":user_profile}
     return render(request,'edit_profile.html',context)
 
 @login_required(login_url='login')
