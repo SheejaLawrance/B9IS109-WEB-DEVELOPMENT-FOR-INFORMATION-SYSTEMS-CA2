@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, auth
 from .models import Profile 
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
@@ -110,7 +110,7 @@ def edit_profile(request):
             
         #username
         if request.POST.get('username')!=None:
-            u=User.objects.filter(email=request.POST.get('username')).first()
+            u=User.objects.filter(username=request.POST.get('username')).first()
             
             if u==None:
                 user_obj.username=request.POST.get('username')
@@ -145,5 +145,18 @@ def edit_profile(request):
 
 @login_required(login_url='login')
 def delete_profile(request):
-    context={}
+    user_obj=User.objects.get(username=request.user)
+    user_profile=Profile.objects.get(user=user_obj)
+    
+    if request.method=="POST":
+        #profile delete
+        user_profile.delete()
+        #user delete
+        user_obj.delete()
+        #logout
+        return redirect('logout')
+        
+        
+    
+    context={"user_profile":user_profile}
     return render(request,'confirm_profile.html',context)
