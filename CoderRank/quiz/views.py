@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from account.models import Profile
 from .models import Quiz, Category
 from django.db.models import Q
+from quiz.models import QuizSubmission
+from django.contrib import messages
 
 # Create your views here.
 @login_required(login_url='login')
@@ -49,8 +51,24 @@ def quiz_view(request, quiz_id):
     user_profile=Profile.objects.get(user=user_obj)
     
     quiz=Quiz.objects.filter(id=quiz_id).first()
+    
+    total_questions=quiz.question_set.all().count()
     if request.method=="POST":
-        pass
+        #get score from front end
+        score=int(request.POST.get('score', 0))
+        print(f"score:+{score}")
+        #check if already submitted
+        if QuizSubmission.objects.filter(user=request.user, quiz=quiz).exists():
+            messages.success(request,f"Your score is {score} out of {total_questions}")
+            return redirect('quiz', quiz_id)
+        
+        
+        submitted=QuizSubmission(user=request.user,quiz=quiz,score=score)
+        submitted.save()
+        
+        #result to frontend
+        messages.success(request,f"Quiz Submitted Successfully. Your score is {score} out of {total_questions}")
+        return redirect('quiz', quiz_id)
     
     if quiz!=None:
         context={"user_profile":user_profile, "quiz":quiz}

@@ -41,24 +41,14 @@
         </tr>
       </thead>
       <tbody>
+        {%for score in result %}
         <tr>
-          <th scope="row">1</th>
-          <td>ProblemSolving</td>
-          <td>22nd Jan</td>
-          <td>76</td>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{score.quiz.title}}</td>
+          <td>{{score.submitted_at|timesince}} ago</td>
+          <td>{{score.score}}/{{score.quiz.question_set.all|length}}</td>
         </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Java</td>
-          <td>2nd Feb</td>
-          <td>89</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Python</td>
-          <td>3rd Feb</td>
-          <td>87</td>
-        </tr>
+        {%endfor%}
       </tbody>
     </table>
     <div class="col">

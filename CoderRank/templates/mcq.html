@@ -2,6 +2,12 @@
 {% block title%}{{quiz.title}}-CoderRank{% endblock title%}
 
 {% block content%}
+<style>
+  .selected{
+    background-color: #17a2b8 !important; /* Change this to the desired highlight color */
+    color: #fff;    
+}
+</style>
 <div class="container">
   <h1 class="display-4 text-center my-5">{{quiz.title}}-({{quiz.question_set.all|length}})</h1>
   <p class="text-center fw-bold">{{quiz.description}}</p>
@@ -12,8 +18,15 @@
       {{quiz.created_at}}
     </span>
     <span id="timer">
-      10:00
+      
     </span>
+  </div>
+  <div class="container">
+    {% for message in messages%}
+    <div class="container" id="msg">
+      <p class="text-center text-success">{{message}}</p>
+    </div>
+    {%endfor%}
   </div>
 
 
@@ -31,10 +44,14 @@
           {% for option in question.choice_set.all %}
           <div class="form-check">
             <label class="form-check-label" for="{{option.id}}">
-              <input class="form-check-input" type="radio" name="{{option.question.id}}" id="{{option.id}}">
-            
+              <input class="form-check-input" type="radio" value="{{option.text}}" name="{{option.question.id}}"
+                id="{{option.id}}">
+
               {{option.text}}
             </label>
+            {%if option.is_correct %}
+            <span class="visually-hidden correct_answer">{{option.text}}</span>
+            {%endif%}
           </div>
           {%endfor%}
         </div>
@@ -43,43 +60,97 @@
     {%endfor%}
   </div>
 
-  <form action="" method="POST">
+  <form action="" method="POST" id="quiz_form">
     {%csrf_token%}
-    <input type="hidden" name="score" value="0">
-
-  <button type="submit" id="submit_button" class="btn btn-primary">Submit Quiz</button>
+    <input type="hidden" name="score" value="0" id="user_score">
+    <button type="submit" id="submit_button" class="btn btn-primary">Submit Quiz</button>
   </form>
 </div>
 
 <script>
-  var submitButton=document.getElementById("submit_button");
-  var timerSpan=document.getElementById("timer");
-  var questions=document.querySelectorAll(".question");
-  quizDuration=(questions.length)*60;
-  //timer
-  function updateTimer(){
-    var minutes=Math.floor(quizDuration/60);
-    var seconds=quizDuration%60;
+  var submitButton = document.getElementById("submit_button");
+  var timerSpan = document.getElementById("timer");
+  var questions = document.querySelectorAll(".question");
+  var quizForm = document.getElementById("quiz_form");
+  var userScore = document.getElementById("user_score");
 
-    timerSpan.innerText=minutes+":"+seconds;
+  quizDuration = (questions.length) * 60;
+  //timer
+  function updateTimer() {
+    var minutes = Math.floor(quizDuration / 60);
+    var seconds = quizDuration % 60;
+
+    timerSpan.innerText = minutes + ":" + seconds;
     //submit if timer is 0
-    if(quizDuration<=0){
+    if (quizDuration <= 0) {
       clearTimeout(quizTimerId);
       submitQuiz();
-    }else{
+    }else if(document.getElementById('msg')){
+      clearTimeout(quizTimerId);
+      highlight();
+
+    }else {
       quizDuration--;
     }
 
   }
 
   //Submit the quiz
-  function submitQuiz(){
-    console.log("Submit");
+  function submitQuiz() {
+    //Calculate score
+    calculateScore();
+    //submit
+    quizForm.submit();
 
   }
   //check result and calculate score
-  //highlight correct answer in green
+  function calculateScore() {
+    var score = 0;
 
-  quizTimerId=setInterval(updateTimer,1000);
+    //check each question
+    questions.forEach(question => {
+      var selectedOption = question.querySelector('input:checked');
+      var correctAnswer = question.querySelector(".correct_answer").innerText;
+
+      
+      console.log("Selected Option:", selectedOption);
+      console.log("Correct Answer:", correctAnswer);
+
+      if (selectedOption && selectedOption.value === correctAnswer) {
+        score += 1;
+      }
+    });
+    //Update the score to span
+    userScore.value = score;
+  }
+  //highlight correct answer in green
+  function highlight(){
+
+    questions.forEach(question=>{
+      var selectedOption=question.querySelector('input:checked')
+      var correctAnswer = question.querySelector(".correct_answer");
+      correctAnswer.previousElementSibling.querySelector("input").classList.add("bg-success");
+      correctAnswer.previousElementSibling.classList.add("fw-bold");
+
+      if(selectedOption){
+        selectedOption.parentElement.classList.add("selected");
+      }
+
+    });
+
+    submitButton.disabled=true;
+    var options=document.querySelectorAll(".form-check-input");
+
+    options.forEach(option=>{
+      option.disabled=true;
+    })
+
+  }
+
+  //event listener on submit
+  submitButton.addEventListener("click", submitQuiz);
+
+  //Timer
+  quizTimerId = setInterval(updateTimer, 1000);
 </script>
 {%endblock content%}

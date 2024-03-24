@@ -1,0 +1,110 @@
+<!-- faq.html -->
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1 class="display-4 text-center my-5">FAQ</h1>
+
+    <div class="accordion" id="faqAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    Question 1: What is CoderRank?
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    CoderRank is the ultimate quiz app designed to help aspiring programmers challenge their coding
+                    skills and climb the ranks.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Question 2: How do I participate in quizzes?
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    To participate in quizzes, simply sign up for an account, log in, and browse through the available
+                    quizzes. Click on a quiz to start solving questions.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Question 3: Can I create my own quizzes?
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Currently, only administrators have the ability to create quizzes. However, users can suggest quiz
+                    topics by contacting us.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Question 4: How are quiz rankings determined?
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Quiz rankings are determined based on the number of correct answers and the time taken to complete
+                    the quiz. Users with higher scores and faster completion times rank higher.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    Question 5: Is CoderRank free to use?
+                </button>
+            </h2>
+            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Yes, CoderRank is completely free to use. There are no subscription fees or hidden charges. Simply
+                    sign up and start participating in quizzes.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingSix">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                    Question 6: When does the quiz score update to the backend?
+                </button>
+            </h2>
+            <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
+                data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    The score of any quiz will only update to the backend when the quiz is taken for the first time.
+                    Subsequent attempts will not update the score to ensure fair ranking and prevent abuse of the
+                    system.
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock content %}

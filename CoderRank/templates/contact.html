@@ -1,0 +1,33 @@
+<!-- contact.html -->
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1 class="display-4 text-center my-5">Contact Us</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Contact Details:</h2>
+                    <p class="card-text">Email: contact@coderrank.com</p>
+                    <p class="card-text">Phone: +1 (123) 456-7890</p>
+                    <!-- Add LinkedIn -->
+                    <p class="card-text">LinkedIn: <a href="https://www.linkedin.com/company/coderrank" target="_blank">CoderRank</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Address:</h2>
+                    <p class="card-text">123 Coder Street</p>
+                    <p class="card-text">Coder City, CodeLand</p>
+                    <p class="card-text">Postal Code: 12345</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

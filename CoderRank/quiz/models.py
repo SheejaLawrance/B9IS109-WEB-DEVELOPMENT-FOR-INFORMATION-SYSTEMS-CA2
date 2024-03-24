@@ -94,17 +94,20 @@ class UserRank(models.Model):
         return f"{self.rank}, {self.user.username}"
  
 @receiver(post_save, sender=QuizSubmission)
-def updated_leaderboard(sender,instance,created,**kwargs):
+def update_leaderboard(sender,instance,created,**kwargs):
     if created:
-        updated_leaderboard()
+        update_leaderboard()
 
     
-def updated_leaderboard():
-    user_scores=(QuizSubmission.objects.values('user').annotate(total_score=Sum('score')).order_by('total_score'))
+def update_leaderboard():
+    #sum the score for all users
+    user_scores=(QuizSubmission.objects.values('user').annotate(total_score=Sum('score')).order_by('-total_score'))
+    #sort
     rank=1
     for entry in user_scores:
         user_id=entry['user']
         total_score=entry['total_score']
+
         
         user_rank, created=UserRank.objects.get_or_create(user_id=user_id)
         user_rank.rank=rank
