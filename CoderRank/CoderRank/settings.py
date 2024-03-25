@@ -26,6 +26,8 @@ SECRET_KEY = 'django-insecure-1e@qiox0$-$d6q66reltx4ah$#f0955c8%8thtte)v&wzc%3v%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#
+CSRF_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = ['coder.uksouth.cloudapp.azure.com']
 
