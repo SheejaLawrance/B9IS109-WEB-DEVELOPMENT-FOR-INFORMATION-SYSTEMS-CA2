@@ -32,6 +32,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 #
 CSRF_COOKIE_SECURE = True
 
+
 ALLOWED_HOSTS = ['coder.uksouth.cloudapp.azure.com']
 
 # Application definition

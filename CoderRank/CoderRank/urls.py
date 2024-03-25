@@ -21,7 +21,7 @@ from django.conf import settings
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('coder-admin/', admin.site.urls),
     path('',include('general.urls')),
     path('user/',include('account.urls')),
     path('quiz/',include('quiz.urls')),
