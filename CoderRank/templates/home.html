@@ -6,60 +6,56 @@
     <h1 class="display-5 fw-bold my-5">Welcome to CoderRank</h1>
     <p class="fs-5">Challenge your coding skills and climb the ranks with CoderRank: the ultimate quiz app for
         aspiring programmers.</p>
-
+    
     <div class="d-inline-flex gap-2 mb-5">
         <a href="{% url 'all_quiz' %}" class="btn btn-success">Take a Quiz</a>
-
+        
         {%if not request.user.is_authenticated%}
         <a href="{% url 'register' %}" class="btn btn-primary">Sign Up</a>
         {%endif%}
     </div>
+
+    <div class="container text-center">
+        {%if not request.user.is_authenticated%}
+        <h1 class="display-4 text-center my-5">LeaderBoard</h1>
+        {%endif%}
+        <div class="row">
+            {%for rank in leaderboard_users%}
+            <div class="col-lg-4 position-relative mb-5">
+                <img src="{{rank.user.profile.profile_img.url}}" width="140" height="140" alt="user"
+                    class="img-fluid bd-placeholder-img rounded-circle">
+                <span class="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-success">
+                    {{forloop.counter}}
+                    <span class="visually-hidden">unread messages</span>
+                </span>
+                <h2 class="fw-normal">@{{rank.user.username}}</h2>
+                <p>{{rank.user.profile.bio|truncatewords:7}}</p>
+                <p><a class="btn btn-secondary" href="{%url 'profile' rank.user.username %}">View Profile »</a></p>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+    
     <div class="container px-4 py-5" id="featured-3">
         <h2 class="pb-2 border-bottom">Categories</h2>
         <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
             <div class="col-md-4">
                 <div class="card category-card">
-                <h3 class="fs-2 text-body-emphasis">Algorithm</h3>
-                <p>
-                    Algorithmic quizzes are assessments designed to evaluate a person's understanding and
-                    proficiency in algorithms, which are step-by-step procedures or formulas for solving problems.
-                    These quizzes typically include questions that require the test-taker to apply various
-                    algorithms to solve problems efficiently. </p>
-               </div>
-               <div class="col-md-4">
-                <div class="card category-card">
-                    <h3 class="fs-2 text-body-emphasis">Java</h3>
-                    <p>
-                        Java-based quizzes are assessments designed to evaluate a person's understanding and
-                        proficiency in the Java programming language. These quizzes typically include questions that
-                        cover various aspects of Java programming, including syntax, concepts, and best practices.
-                    </p>
+                    <div class="card-body">
+                        <h3 class="card-title fs-2 text-body-emphasis">Algorithm</h3>
+                        <p class="card-text">Algorithmic quizzes are assessments designed to evaluate a person's understanding and proficiency in algorithms, which are step-by-step procedures or formulas for solving problems. These quizzes typically include questions that require the test-taker to apply various algorithms to solve problems efficiently.</p>
+                    </div>
                 </div>
-                </div>
-
             </div>
-        </div>
-
-
-        <div class="container text-center">
-            {%if request.user.is_authenticated%}
-            <h1 class="display-4 text-center my-5">LeaderBoard</h1>
-            {%endif%}
-            <div class="row">
-                {%for rank in leaderboard_users%}
-                <div class="col-lg-4 position-relative mb-5">
-                    <img src="{{rank.user.profile.profile_img.url}}" width="140" height="140" alt="user"
-                        class="img-fluid bd-placeholder-img rounded-circle">
-                    <span class="position-absolute top-0 start-90 translate-middle badge rounded-pill bg-success">
-                        {{forloop.counter}}
-                        <span class="visually-hidden">unread messages</span>
-                    </span>
-                    <h2 class="fw-normal">@{{rank.user.username}}</h2>
-                    <p>{{rank.user.profile.bio|truncatewords:7}}</p>
-                    <p><a class="btn btn-secondary" href="{%url 'profile' rank.user.username %}">View Profile »</a></p>
+            <div class="col-md-4">
+                <div class="card category-card">
+                    <div class="card-body">
+                        <h3 class="card-title fs-2 text-body-emphasis">Java</h3>
+                        <p class="card-text">Java-based quizzes are assessments designed to evaluate a person's understanding and proficiency in the Java programming language. These quizzes typically include questions that cover various aspects of Java programming, including syntax, concepts, and best practices.</p>
+                    </div>
                 </div>
-                {%endfor%}
             </div>
         </div>
     </div>
-    {% endblock content %}
+</div>
+{% endblock content %}
