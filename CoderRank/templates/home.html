@@ -16,8 +16,9 @@
     </div>
 
     <div class="container text-center">
-        
+        {%if request.user.is_authenticated%}
         <h1 class="display-4 text-center my-5">LeaderBoard</h1>
+        {%if request.user.is_authenticated%}
         <div class="row">
             {%for rank in leaderboard_users%}
             <div class="col-lg-4 position-relative mb-5">
